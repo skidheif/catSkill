@@ -7,13 +7,20 @@ public class Cat
     private double minWeight;
     private double maxWeight;
 
+    private static int count = 0;
+
+    //статический метод getCount(), который будет возвращать количество кошек
+    public static int getCount() {
+        return count;
+    }
+
     public Cat()
     {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
         minWeight = 1000.0;
         maxWeight = 9000.0;
-
+        count++;
     }
 
     public void meow()
@@ -40,9 +47,11 @@ public class Cat
     public String getStatus()
     {
         if(weight < minWeight) {
+            count--;
             return "Dead";
         }
         else if(weight > maxWeight) {
+            count--;
             return "Exploded";
         }
         else if(weight > originWeight) {
@@ -62,7 +71,6 @@ public class Cat
     }
 
     //Создать в классе Cat метод “сходить в туалет”, который будет уменьшать вес кошки и что-нибудь печатать.
-
     public void goToToilet() {
         int count = 1;
         weight--;
