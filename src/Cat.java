@@ -52,4 +52,21 @@ public class Cat
             return "Playing";
         }
     }
+
+    //Создать в классе Cat метод, который будет возвращать массу съеденной еды
+    public Double returnFeedCount(Double amount) {
+        double weightBefore = weight;
+        feed(amount);
+        double weightAfter = getWeight();
+        return weightAfter - weightBefore;
+    }
+
+    //Создать в классе Cat метод “сходить в туалет”, который будет уменьшать вес кошки и что-нибудь печатать.
+
+    public void goToToilet() {
+        int count = 1;
+        weight--;
+        System.out.println("The cat went to the toilet " + count + " times");
+        count++;
+    }
 }
