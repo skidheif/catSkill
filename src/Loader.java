@@ -41,4 +41,9 @@ public class Loader {
         System.out.println();
         System.out.println("Cat2 has status: " + cat2.getStatus());
     }
+
+    //создать в главном классе метод генерации кошки, как описано в видеоуроке.
+    public static void createCat(Double weight) {
+        Cat cat = new Cat(weight);
+    }
 }

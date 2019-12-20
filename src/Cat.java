@@ -28,6 +28,11 @@ public class Cat
         count++;
     }
 
+    public Cat(Double weight) {
+        this.weight = weight;
+        count++; //просто добавил чтобы возвращать потом верное кол-во кошек
+    }
+
     public void meow()
     {
         weight = weight - 1;
