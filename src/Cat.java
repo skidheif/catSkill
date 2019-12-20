@@ -9,6 +9,11 @@ public class Cat
 
     private static int count = 0;
 
+    //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
+    private static final int CAT_EYES = 2;
+    private static final int MIN_WEIGHT = 300; //gr
+    private static final int MAX_WEIGHT = 10000; //gr
+
     //статический метод getCount(), который будет возвращать количество кошек
     public static int getCount() {
         return count;
