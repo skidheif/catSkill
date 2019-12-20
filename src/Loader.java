@@ -46,4 +46,9 @@ public class Loader {
     public static void createCat(Double weight) {
         Cat cat = new Cat(weight);
     }
+
+    //Создать у кошки метод создания её “глубокой” копии.
+    public static void cloneCat(double weight, double originWeight, double minWeight, double maxWeight) {
+        Cat cat = new Cat(weight, originWeight, minWeight, maxWeight);
+    }
 }

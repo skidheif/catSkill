@@ -40,6 +40,14 @@ public class Cat
         count++;
     }
 
+    //Создать у кошки метод создания её “глубокой” копии.
+    public Cat(double weight, double originWeight, double minWeight, double maxWeight) {
+        this.weight = weight;
+        this.originWeight = weight;
+        this.minWeight = minWeight;
+        this.maxWeight = maxWeight;
+    }
+
     public Cat(Double weight) {
         this.weight = weight;
         count++; //просто добавил чтобы возвращать потом верное кол-во кошек
