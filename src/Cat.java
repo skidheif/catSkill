@@ -7,6 +7,8 @@ public class Cat
     private double minWeight;
     private double maxWeight;
 
+    private String catColor;
+
     private static int count = 0;
 
     //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
@@ -18,6 +20,16 @@ public class Cat
     public static int getCount() {
         return count;
     }
+
+    //Создать у кошки геттер и сеттер для окраса
+    public String getCatColor() {
+        return catColor;
+    }
+
+    public void setCatColor(String catColor) {
+        this.catColor = catColor;
+    }
+
 
     public Cat()
     {
