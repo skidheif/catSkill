@@ -1,11 +1,41 @@
 
 public class Cat
 {
+
     private double originWeight;
     private double weight;
 
     private double minWeight;
     private double maxWeight;
+
+    //getters and setters
+    public double getOriginWeight() {
+        return originWeight;
+    }
+
+    public void setOriginWeight(double originWeight) {
+        this.originWeight = originWeight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getMinWeight() {
+        return minWeight;
+    }
+
+    public void setMinWeight(double minWeight) {
+        this.minWeight = minWeight;
+    }
+
+    public double getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(double maxWeight) {
+        this.maxWeight = maxWeight;
+    }
 
     private String catColor;
 
@@ -41,11 +71,13 @@ public class Cat
     }
 
     //Создать у кошки метод создания её “глубокой” копии.
-    public Cat(double weight, double originWeight, double minWeight, double maxWeight) {
-        this.weight = weight;
-        this.originWeight = weight;
-        this.minWeight = minWeight;
-        this.maxWeight = maxWeight;
+    public static Cat cloneCat(Cat oldCat) {
+        Cat newCat = new Cat();
+        newCat.setWeight(oldCat.getWeight());
+        newCat.setOriginWeight(oldCat.getOriginWeight());
+        newCat.setMinWeight(oldCat.getMinWeight());
+        newCat.setMaxWeight(oldCat.getMaxWeight());
+        count++;
     }
 
     public Cat(Double weight) {
