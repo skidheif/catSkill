@@ -1,12 +1,13 @@
 
 public class Cat
 {
-
     private double originWeight;
     private double weight;
 
     private double minWeight;
     private double maxWeight;
+
+    private CatColor catColor = CatColor.BLACK; // по-умолчанию кошка будет черной
 
     //getters and setters
     public double getOriginWeight() {
@@ -37,28 +38,35 @@ public class Cat
         this.maxWeight = maxWeight;
     }
 
-    private String catColor;
-
-    private static int count = 0;
-
     //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
     private static final int CAT_EYES = 2;
     private static final int MIN_WEIGHT = 300; //gr
     private static final int MAX_WEIGHT = 10000; //gr
 
+    //завести переменную в классе, куда прибавлять вес еды, при каждой кормежке
+    private double eatenFood;
+
+    //Создать в классе Cat метод, который будет возвращать массу съеденной еды
+    public double getEatenFood() {
+        return eatenFood;
+    }
+
+    private static int count = 0;
     //статический метод getCount(), который будет возвращать количество кошек
     public static int getCount() {
         return count;
     }
 
     //Создать у кошки геттер и сеттер для окраса
-    public String getCatColor() {
+    public CatColor getCatColor() {
         return catColor;
     }
 
-    public void setCatColor(String catColor) {
+    public void setCatColor(CatColor catColor) {
         this.catColor = catColor;
     }
+
+    private boolean wasAlive;
 
 
     public Cat()
@@ -78,6 +86,7 @@ public class Cat
         newCat.setMinWeight(oldCat.getMinWeight());
         newCat.setMaxWeight(oldCat.getMaxWeight());
         count++;
+        return newCat;
     }
 
     public Cat(Double weight) {
@@ -87,13 +96,19 @@ public class Cat
 
     public void meow()
     {
+        wasAlive = true;
         weight = weight - 1;
         System.out.println("Meow");
+        if (weight < minWeight) {
+            wasAlive = false;
+            count--;
+        }
     }
 
     public void feed(Double amount)
     {
         weight = weight + amount;
+        eatenFood += amount;
     }
 
     public void drink(Double amount)
@@ -109,11 +124,9 @@ public class Cat
     public String getStatus()
     {
         if(weight < minWeight) {
-            count--;
             return "Dead";
         }
         else if(weight > maxWeight) {
-            count--;
             return "Exploded";
         }
         else if(weight > originWeight) {
@@ -124,19 +137,11 @@ public class Cat
         }
     }
 
-    //Создать в классе Cat метод, который будет возвращать массу съеденной еды
-    public Double returnFeedCount(Double amount) {
-        double weightBefore = weight;
-        feed(amount);
-        double weightAfter = getWeight();
-        return weightAfter - weightBefore;
-    }
-
+    int countGoToToilet = 1;
     //Создать в классе Cat метод “сходить в туалет”, который будет уменьшать вес кошки и что-нибудь печатать.
     public void goToToilet() {
-        int count = 1;
         weight--;
-        System.out.println("The cat went to the toilet " + count + " times");
-        count++;
+        System.out.println("The cat went to the toilet " + countGoToToilet + " times");
+        countGoToToilet += 1;
     }
 }
