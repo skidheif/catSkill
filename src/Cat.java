@@ -4,12 +4,17 @@ public class Cat
     private double originWeight;
     private double weight;
 
-    private double minWeight;
-    private double maxWeight;
-
     private CatColor catColor = CatColor.BLACK; // по-умолчанию кошка будет черной
 
-    //getters and setters
+    //Создать у кошки геттер и сеттер для окраса
+    public CatColor getCatColor() {
+        return catColor;
+    }
+
+    public void setCatColor(CatColor catColor) {
+        this.catColor = catColor;
+    }
+
     public double getOriginWeight() {
         return originWeight;
     }
@@ -18,33 +23,31 @@ public class Cat
         this.originWeight = originWeight;
     }
 
+    public Double getWeight()
+    {
+        return weight;
+    }
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public double getMinWeight() {
-        return minWeight;
-    }
-
-    public void setMinWeight(double minWeight) {
-        this.minWeight = minWeight;
-    }
-
-    public double getMaxWeight() {
-        return maxWeight;
-    }
-
-    public void setMaxWeight(double maxWeight) {
-        this.maxWeight = maxWeight;
-    }
-
     //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
     private static final int CAT_EYES = 2;
+
     private static final int MIN_WEIGHT = 300; //gr
     private static final int MAX_WEIGHT = 10000; //gr
 
+    public static int getMinWeight() {
+        return MIN_WEIGHT;
+    }
+
+    public static int getMaxWeight() {
+        return MAX_WEIGHT;
+    }
+
     //завести переменную в классе, куда прибавлять вес еды, при каждой кормежке
     private double eatenFood;
+
 
     //Создать в классе Cat метод, который будет возвращать массу съеденной еды
     public double getEatenFood() {
@@ -57,24 +60,13 @@ public class Cat
         return count;
     }
 
-    //Создать у кошки геттер и сеттер для окраса
-    public CatColor getCatColor() {
-        return catColor;
-    }
-
-    public void setCatColor(CatColor catColor) {
-        this.catColor = catColor;
-    }
-
-    private boolean wasAlive;
+    private boolean wasAlive = true;
 
 
     public Cat()
     {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
         count++;
     }
 
@@ -83,8 +75,6 @@ public class Cat
         Cat newCat = new Cat();
         newCat.setWeight(oldCat.getWeight());
         newCat.setOriginWeight(oldCat.getOriginWeight());
-        newCat.setMinWeight(oldCat.getMinWeight());
-        newCat.setMaxWeight(oldCat.getMaxWeight());
         count++;
         return newCat;
     }
@@ -96,10 +86,11 @@ public class Cat
 
     public void meow()
     {
-        wasAlive = true;
-        weight = weight - 1;
-        System.out.println("Meow");
-        if (weight < minWeight) {
+        if (wasAlive) {
+            weight = weight - 1;
+            System.out.println("Meow");
+        }
+        if (weight < getMinWeight()) {
             wasAlive = false;
             count--;
         }
@@ -107,26 +98,34 @@ public class Cat
 
     public void feed(Double amount)
     {
-        weight = weight + amount;
-        eatenFood += amount;
+        if (wasAlive) {
+            weight = weight + amount;
+            eatenFood += amount;
+        }
+        if (weight > getMaxWeight()){
+            wasAlive = false;
+            count--;
+        }
     }
 
     public void drink(Double amount)
     {
-        weight = weight + amount;
-    }
-
-    public Double getWeight()
-    {
-        return weight;
+        if (wasAlive) {
+            weight = weight + amount;
+            eatenFood += amount;
+        }
+        if (weight > getMaxWeight()){
+            wasAlive = false;
+            count--;
+        }
     }
 
     public String getStatus()
     {
-        if(weight < minWeight) {
+        if(weight < getMinWeight()) {
             return "Dead";
         }
-        else if(weight > maxWeight) {
+        else if(weight > getMaxWeight()) {
             return "Exploded";
         }
         else if(weight > originWeight) {
