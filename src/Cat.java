@@ -1,6 +1,5 @@
 
-public class Cat
-{
+public class Cat {
     private double originWeight;
     private double weight;
 
@@ -23,10 +22,10 @@ public class Cat
         this.originWeight = originWeight;
     }
 
-    public Double getWeight()
-    {
+    public Double getWeight() {
         return weight;
     }
+
     public void setWeight(double weight) {
         this.weight = weight;
     }
@@ -55,6 +54,7 @@ public class Cat
     }
 
     private static int count = 0;
+
     //статический метод getCount(), который будет возвращать количество кошек
     public static int getCount() {
         return count;
@@ -63,8 +63,7 @@ public class Cat
     private boolean wasAlive = true;
 
 
-    public Cat()
-    {
+    public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
         count++;
@@ -81,11 +80,15 @@ public class Cat
 
     public Cat(Double weight) {
         this.weight = weight;
-        count++; //просто добавил чтобы возвращать потом верное кол-во кошек
+        this.originWeight = weight;
+        if (weight > getMaxWeight()) {
+            wasAlive = false;
+        } else {
+            count++;
+        }
     }
 
-    public void meow()
-    {
+    public void meow() {
         if (wasAlive) {
             weight = weight - 1;
             System.out.println("Meow");
@@ -96,47 +99,42 @@ public class Cat
         }
     }
 
-    public void feed(Double amount)
-    {
+    public void feed(Double amount) {
         if (wasAlive) {
             weight = weight + amount;
             eatenFood += amount;
         }
-        if (weight > getMaxWeight()){
+        if (weight > getMaxWeight()) {
             wasAlive = false;
             count--;
         }
     }
 
-    public void drink(Double amount)
-    {
+    public void drink(Double amount) {
         if (wasAlive) {
             weight = weight + amount;
             eatenFood += amount;
         }
-        if (weight > getMaxWeight()){
+        if (weight > getMaxWeight()) {
             wasAlive = false;
             count--;
         }
     }
 
-    public String getStatus()
-    {
-        if(weight < getMinWeight()) {
+    public String getStatus() {
+        if (weight < getMinWeight()) {
             return "Dead";
-        }
-        else if(weight > getMaxWeight()) {
+        } else if (weight > getMaxWeight()) {
             return "Exploded";
-        }
-        else if(weight > originWeight) {
+        } else if (weight > originWeight) {
             return "Sleeping";
-        }
-        else {
+        } else {
             return "Playing";
         }
     }
 
     int countGoToToilet = 1;
+
     //Создать в классе Cat метод “сходить в туалет”, который будет уменьшать вес кошки и что-нибудь печатать.
     public void goToToilet() {
         weight--;
