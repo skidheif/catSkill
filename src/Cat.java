@@ -1,18 +1,33 @@
 
 public class Cat {
+
+    //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
+    private static final int CAT_EYES = 2;
+
+    private static final int MIN_WEIGHT = 300; //gr
+    private static final int MAX_WEIGHT = 10000; //gr
+
+    public static int getMinWeight() {
+        return MIN_WEIGHT;
+    }
+
+    public static int getMaxWeight() {
+        return MAX_WEIGHT;
+    }
+
+    private static int count = 0;
+
+    //статический метод getCount(), который будет возвращать количество кошек
+    public static int getCount() {
+        return count;
+    }
+
     private double originWeight;
     private double weight;
-
     private CatColor catColor = CatColor.BLACK; // по-умолчанию кошка будет черной
-
-    //Создать у кошки геттер и сеттер для окраса
-    public CatColor getCatColor() {
-        return catColor;
-    }
-
-    public void setCatColor(CatColor catColor) {
-        this.catColor = catColor;
-    }
+    //завести переменную в классе, куда прибавлять вес еды, при каждой кормежке
+    private double eatenFood;
+    private boolean wasAlive = true;
 
     public double getOriginWeight() {
         return originWeight;
@@ -30,52 +45,23 @@ public class Cat {
         this.weight = weight;
     }
 
-    //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
-    private static final int CAT_EYES = 2;
-
-    private static final int MIN_WEIGHT = 300; //gr
-    private static final int MAX_WEIGHT = 10000; //gr
-
-    public static int getMinWeight() {
-        return MIN_WEIGHT;
+    //Создать у кошки геттер и сеттер для окраса
+    public CatColor getCatColor() {
+        return catColor;
     }
 
-    public static int getMaxWeight() {
-        return MAX_WEIGHT;
+    public void setCatColor(CatColor catColor) {
+        this.catColor = catColor;
     }
-
-    //завести переменную в классе, куда прибавлять вес еды, при каждой кормежке
-    private double eatenFood;
-
 
     //Создать в классе Cat метод, который будет возвращать массу съеденной еды
     public double getEatenFood() {
         return eatenFood;
     }
 
-    private static int count = 0;
-
-    //статический метод getCount(), который будет возвращать количество кошек
-    public static int getCount() {
-        return count;
-    }
-
-    private boolean wasAlive = true;
-
-
     public Cat() {
-        weight = 1500.0 + 3000.0 * Math.random();
-        originWeight = weight;
+        this(1500.0 + 3000.0 * Math.random());
         count++;
-    }
-
-    //Создать у кошки метод создания её “глубокой” копии.
-    public static Cat cloneCat(Cat oldCat) {
-        Cat newCat = new Cat();
-        newCat.setWeight(oldCat.getWeight());
-        newCat.setOriginWeight(oldCat.getOriginWeight());
-        count++;
-        return newCat;
     }
 
     public Cat(Double weight) {
@@ -88,6 +74,15 @@ public class Cat {
         }
     }
 
+    //Создать у кошки метод создания её “глубокой” копии.
+    public static Cat cloneCat(Cat oldCat) {
+        Cat newCat = new Cat(oldCat.getWeight());
+        newCat.setWeight(oldCat.getWeight());
+        newCat.setOriginWeight(oldCat.getOriginWeight());
+        return newCat;
+    }
+
+
     public void meow() {
         if (wasAlive) {
             weight = weight - 1;
@@ -95,7 +90,9 @@ public class Cat {
         }
         if (weight < getMinWeight()) {
             wasAlive = false;
-            count--;
+            if (count != 0) {
+                count--;
+            }
         }
     }
 
@@ -106,18 +103,21 @@ public class Cat {
         }
         if (weight > getMaxWeight()) {
             wasAlive = false;
-            count--;
+            if (count != 0) {
+                count--;
+            }
         }
     }
 
     public void drink(Double amount) {
         if (wasAlive) {
             weight = weight + amount;
-            eatenFood += amount;
         }
         if (weight > getMaxWeight()) {
             wasAlive = false;
-            count--;
+            if (count != 0) {
+                count--;
+            }
         }
     }
 
