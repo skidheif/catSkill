@@ -1,5 +1,5 @@
 
-public class Loader {
+public class Loader extends Cat {
     public static void main(String[] args) {
         //Создать 5-7 кошек
         Cat cat1 = new Cat();
@@ -48,8 +48,7 @@ public class Loader {
     }
 
     //Создать у кошки метод создания её “глубокой” копии.
-    public static void cloneCat() {
-        Cat cat = new Cat();
-        Cat.cloneCat(cat);
+    public void copyCat() {
+        new Cat().cloneCat(this);
     }
 }
