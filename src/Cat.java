@@ -2,9 +2,9 @@
 public class Cat {
 
     //Создать у кошки константы “количество глаз”, “минимальный вес” и “максимальный вес”.
-    private static final int CAT_EYES = 2;
-    private static final int MIN_WEIGHT = 300; //gr
-    private static final int MAX_WEIGHT = 10000; //gr
+    public static final int CAT_EYES = 2;
+    public static final int MIN_WEIGHT = 300; //gr
+    public static final int MAX_WEIGHT = 10000; //gr
 
     private static int count = 0;
 
@@ -14,14 +14,7 @@ public class Cat {
     //завести переменную в классе, куда прибавлять вес еды, при каждой кормежке
     private double eatenFood;
     private boolean wasAlive = true;
-
-    public static int getMinWeight() {
-        return MIN_WEIGHT;
-    }
-
-    public static int getMaxWeight() {
-        return MAX_WEIGHT;
-    }
+    private int countGoToToilet = 1;
 
     public double getOriginWeight() {
         return originWeight;
@@ -60,7 +53,7 @@ public class Cat {
     public Cat(Double weight) {
         this.weight = weight;
         this.originWeight = weight;
-        if (weight > getMaxWeight() || weight < getMinWeight()) {
+        if (weight > MAX_WEIGHT || weight < MIN_WEIGHT) {
             wasAlive = false;
         } else {
             if (count < 0) {
@@ -83,61 +76,10 @@ public class Cat {
         return newCat;
     }
 
-
-    public void meow() {
-        if (wasAlive) {
-            weight = weight - 1;
-            System.out.println("Meow");
-        }
-        if (weight < getMinWeight()) {
-            wasAlive = false;
-        }
-        if (count <= 0) {
-            count++;
-        }
-        if (getStatus().equalsIgnoreCase("Exploded") ||
-                getStatus().equalsIgnoreCase("Dead")) {
-            count--;
-        }
-    }
-
-    public void feed(Double amount) {
-        if (wasAlive) {
-            weight = weight + amount;
-            eatenFood += amount;
-        }
-        if (weight > getMaxWeight()) {
-            wasAlive = false;
-        }
-        if (count <= 0) {
-            count++;
-        }
-        if (getStatus().equalsIgnoreCase("Exploded") ||
-                getStatus().equalsIgnoreCase("Dead")) {
-            count--;
-        }
-    }
-
-    public void drink(Double amount) {
-        if (wasAlive) {
-            weight = weight + amount;
-        }
-        if (weight > getMaxWeight()) {
-            wasAlive = false;
-        }
-        if (count <= 0) {
-            count++;
-        }
-        if (getStatus().equalsIgnoreCase("Exploded") ||
-                getStatus().equalsIgnoreCase("Dead")) {
-            count--;
-        }
-    }
-
     public String getStatus() {
-        if (weight < getMinWeight()) {
+        if (weight < MIN_WEIGHT) {
             return "Dead";
-        } else if (weight > getMaxWeight()) {
+        } else if (weight > MAX_WEIGHT) {
             return "Exploded";
         } else if (weight > originWeight) {
             return "Sleeping";
@@ -146,14 +88,66 @@ public class Cat {
         }
     }
 
-    int countGoToToilet = 1;
+
+    public void meow() {
+        if (wasAlive) {
+            weight--;
+            System.out.println("Meow");
+            if (weight < MIN_WEIGHT) {
+                wasAlive = false;
+                count--;
+            }
+        }
+        if (!wasAlive && getStatus().equals("Dead") ||
+                getStatus().equals("Exploded")) {
+            System.out.println("Your cat is dead, sorry it can't do meow again" + "\n");
+        }
+    }
+
+    public void feed(Double amount) {
+        if (wasAlive) {
+            weight = weight + amount;
+            eatenFood += amount;
+            if (weight > MAX_WEIGHT) {
+                wasAlive = false;
+                count--;
+            }
+        }
+        if (!wasAlive && getStatus().equals("Dead") ||
+                getStatus().equals("Exploded")) {
+            System.out.println("Your cat is dead, sorry but you can't feed it" + "\n");
+        }
+    }
+
+    public void drink(Double amount) {
+        if (wasAlive) {
+            weight = weight + amount;
+            if (weight > MAX_WEIGHT) {
+                wasAlive = false;
+                count--;
+            }
+        }
+        if (!wasAlive && getStatus().equals("Dead") ||
+                getStatus().equals("Exploded")) {
+            System.out.println("Your cat is dead, sorry but you can't give water to it" + "\n");
+        }
+    }
+
 
     //Создать в классе Cat метод “сходить в туалет”, который будет уменьшать вес кошки и что-нибудь печатать.
     public void goToToilet() {
-        if (getWeight() > getMinWeight() && getWeight() < getMaxWeight()) {
+        if (wasAlive) {
             weight--;
             System.out.println("The cat went to the toilet " + countGoToToilet + " times");
             countGoToToilet += 1;
-        } else System.out.println("Sorry, your cat is dead!");
+            if (weight < MIN_WEIGHT) {
+                wasAlive = false;
+                count--;
+            }
+        }
+        if (!wasAlive && getStatus().equals("Dead") ||
+                getStatus().equals("Exploded")) {
+            System.out.println("Your cat is dead, sorry but it can't go to toilet" + "\n");
+        }
     }
 }
